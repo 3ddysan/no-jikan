@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "bulma",
+        "fullwidth",
+        "immer",
+        "jikan",
+        "lightcoral"
+    ],
+    "files.exclude": {
+        "node_modules": true
+    }
+}
