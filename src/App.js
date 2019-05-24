@@ -1,7 +1,7 @@
 import React from 'react'
-import HistoryTable from './components/HistoryTable'
-import Timer from './components/Timer'
-import Logo from './components/Logo'
+import HistoryTable from 'components/HistoryTable'
+import Timer from 'components/Timer'
+import Logo from 'components/Logo'
 
 const App = () => {
     return (
