@@ -10,6 +10,14 @@ const Title = styled.h1`
     span {
         background-color: white;
     }
+
+    transition: all 0.3s ease-in-out 0s;
+
+    &:hover {
+        cursor: pointer;
+        transform: rotate(8deg);
+        transition: all 0.3s ease-in-out 0s;
+    }
 `
 
 const Logo = () => (
