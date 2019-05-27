@@ -1,11 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-
-const formatSeconds = (s) => {
-    const minutes = Math.floor(s / 60) % 60;
-    const hours = Math.floor(s / 3600);
-    const seconds = s % 60;
-    return { hours, minutes, seconds };
-}
+import { transformSeconds } from 'helper'
 
 export const useTimer = (active = false, elapsedSeconds = 0) => {
     const [seconds, setSeconds] = useState(elapsedSeconds)
@@ -38,9 +32,10 @@ export const useTimer = (active = false, elapsedSeconds = 0) => {
     }
 
     return {
-        timer: formatSeconds(seconds),
+        timer: transformSeconds(seconds),
         toggle,
         stop,
-        state
+        state,
+        totalSeconds: seconds
     };
 }
