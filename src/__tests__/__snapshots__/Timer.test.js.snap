@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Controls renders paused state correctly 1`] = `
+<div
+  className="columns is-mobile is-centered"
+>
+  <div
+    className="column is-1"
+    style={
+      Object {
+        "width": "auto",
+      }
+    }
+  >
+    <button
+      className="button is-medium is-warning"
+    >
+      Play
+    </button>
+  </div>
+  <div
+    className="column is-1"
+    style={
+      Object {
+        "width": "auto",
+      }
+    }
+  >
+    <button
+      className="button is-danger is-medium"
+      disabled={false}
+    >
+      Stop
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Controls renders running state correctly 1`] = `
+<div
+  className="columns is-mobile is-centered"
+>
+  <div
+    className="column is-1"
+    style={
+      Object {
+        "width": "auto",
+      }
+    }
+  >
+    <button
+      className="button is-medium is-active"
+    >
+      Pause
+    </button>
+  </div>
+  <div
+    className="column is-1"
+    style={
+      Object {
+        "width": "auto",
+      }
+    }
+  >
+    <button
+      className="button is-danger is-medium"
+      disabled={false}
+    >
+      Stop
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Controls renders stopped state correctly 1`] = `
+<div
+  className="columns is-mobile is-centered"
+>
+  <div
+    className="column is-1"
+    style={
+      Object {
+        "width": "auto",
+      }
+    }
+  >
+    <button
+      className="button is-medium is-primary"
+    >
+      Play
+    </button>
+  </div>
+  <div
+    className="column is-1"
+    style={
+      Object {
+        "width": "auto",
+      }
+    }
+  >
+    <button
+      className="button is-danger is-medium"
+      disabled={true}
+    >
+      Stop
+    </button>
+  </div>
+</div>
+`;
+
+exports[`Display renders state correctly 1`] = `
+<div
+  className="sc-bdVaJa gZRiZe"
+>
+  <div
+    className="sc-bwzfXH gCXOUF"
+  >
+    <div
+      className="unit is-size-5"
+    >
+      02
+    </div>
+    <div
+      className="unit-label is-size-7 has-text-centered"
+    >
+      Hours
+    </div>
+  </div>
+  <div
+    className="sc-bwzfXH gCXOUF"
+  >
+    <div
+      className="unit is-size-5"
+    >
+      41
+    </div>
+    <div
+      className="unit-label is-size-7 has-text-centered"
+    >
+      Minutes
+    </div>
+  </div>
+  <div
+    className="sc-bwzfXH gCXOUF"
+  >
+    <div
+      className="unit is-size-5"
+    >
+      03
+    </div>
+    <div
+      className="unit-label is-size-7 has-text-centered"
+    >
+      Seconds
+    </div>
+  </div>
+</div>
+`;
