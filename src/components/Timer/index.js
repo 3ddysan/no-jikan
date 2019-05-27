@@ -53,7 +53,7 @@ export function Display({ hours, minutes, seconds }) {
     );
 }
 
-export function Controls({ onToggle, onReset, state }) {
+export function Controls({ onToggle, onStop, state }) {
     return (
         <div className="columns is-mobile is-centered">
             <div className="column is-1" style={{ width: 'auto' }}>
@@ -62,7 +62,7 @@ export function Controls({ onToggle, onReset, state }) {
                 </button>
             </div>
             <div className="column is-1" style={{ width: 'auto' }}>
-                <button onClick={onReset} className="button is-danger is-medium" disabled={state === 'stopped'}>
+                <button onClick={onStop} className="button is-danger is-medium" disabled={state === 'stopped'}>
                     Stop
             </button>
             </div>
@@ -71,14 +71,14 @@ export function Controls({ onToggle, onReset, state }) {
 }
 
 const Timer = ({ active = false, elapsedSeconds = 0 }) => {
-    const { timer, toggle, reset, state } = useTimer(active, elapsedSeconds);
+    const { timer, toggle, stop, state } = useTimer(active, elapsedSeconds);
     return (
         <>
             <div className="container">
                 <Display {...timer} />
             </div>
             <div className="container">
-                <Controls onToggle={toggle} onReset={reset} state={state} />
+                <Controls onToggle={toggle} onStop={stop} state={state} />
             </div>
         </>
     )

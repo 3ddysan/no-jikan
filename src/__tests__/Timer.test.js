@@ -56,12 +56,12 @@ describe('Controls', () => {
 
   it('should toggle reset callback', () => {
     const toggle = jest.fn();
-    const reset = jest.fn(() => console.log('click on Stop button'));
-    const { getByText } = render(<Controls onToggle={toggle} onReset={reset} state='running' />);
+    const stop = jest.fn(() => console.log('click on Stop button'));
+    const { getByText } = render(<Controls onToggle={toggle} onStop={stop} state='running' />);
 
     fireEvent.click(getByText('Stop'));
 
-    expect(reset).toBeCalled();
+    expect(stop).toBeCalled();
     expect(toggle).not.toBeCalled();
   });
 

@@ -32,7 +32,7 @@ export const useTimer = (active = false, elapsedSeconds = 0) => {
         setActive(isActive => !isActive)
     }
 
-    const reset = () => {
+    const stop = () => {
         setActive(false)
         setSeconds(0)
     }
@@ -40,7 +40,7 @@ export const useTimer = (active = false, elapsedSeconds = 0) => {
     return {
         timer: formatSeconds(seconds),
         toggle,
-        reset,
+        stop,
         state
     };
 }
