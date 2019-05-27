@@ -11,7 +11,7 @@ const App = () => {
                     <Logo />
                 </div>
                 <div className="hero-body has-text-centered">
-                    <Timer hours='00' minutes='34' seconds='23' />
+                    <Timer active elapsedSeconds={0} />
                 </div>
                 <div className="hero-footer">
                     <HistoryTable entries={[
