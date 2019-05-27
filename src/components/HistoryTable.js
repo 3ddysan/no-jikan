@@ -5,6 +5,31 @@ import { faCalendarDay, faClock, faCoffee } from '@fortawesome/free-solid-svg-ic
 
 library.add(faCalendarDay, faClock, faCoffee)
 
+function list(entries) {
+    if (entries.length > 0) {
+        return entries.map((entry, index) => (
+            <tr key={index} className="on-mobile-higher">
+                <td>{entry.work}</td>
+                <td>{entry.break}</td>
+                <td className="has-text-centered">{entry.date}</td>
+                <td className="is-hidden-mobile has-text-centered">
+                    <a className="button is-light" href="#/">
+                        <span className="">Delete</span>
+                    </a>
+                </td>
+            </tr>
+        ))
+    } else {
+        return (
+            <tr>
+                <td colSpan="4" className='has-text-centered'>
+                    There's no data
+                </td>
+            </tr>
+        );
+    }
+}
+
 const HistoryTable = ({ entries = [] }) => (
     <div className="container">
         <table className="table is-fullwidth">
@@ -28,18 +53,7 @@ const HistoryTable = ({ entries = [] }) => (
                 </tr>
             </thead>
             <tbody>
-                {entries.map((entry, index) => (
-                    <tr key={index} className="on-mobile-higher">
-                        <td>{entry.work}</td>
-                        <td>{entry.break}</td>
-                        <td className="has-text-centered">{entry.date}</td>
-                        <td className="is-hidden-mobile has-text-centered">
-                            <a className="button is-light" href="#/">
-                                <span className="">Delete</span>
-                            </a>
-                        </td>
-                    </tr>
-                ))}
+                {list(entries)}
             </tbody>
         </table>
     </div>

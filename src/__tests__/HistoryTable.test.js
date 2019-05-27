@@ -1,9 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import HistoryTable from 'components/HistoryTable';
+import renderer from 'react-test-renderer';
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<HistoryTable />, div);
-  ReactDOM.unmountComponentAtNode(div);
+describe('HistoryTable', () => {
+
+  it('renders empty state', () => {
+    const tree = renderer
+      .create(<HistoryTable entries={[]} />)
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('renders with single ', () => {
+    const tree = renderer
+      .create(<HistoryTable entries={[{ work: 'work-time', break: 'break-time', date: 'date' }]} />)
+      .toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
 });
