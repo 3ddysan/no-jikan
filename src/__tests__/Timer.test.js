@@ -43,23 +43,22 @@ describe('Controls', () => {
 
   afterEach(cleanup);
 
-  it('should toggle play/pause callback', () => {
+  it('should toggle start/pause callback', () => {
     const toggle = jest.fn();
-    const reset = jest.fn();
-    const { getByText } = render(<Controls onToggle={toggle} onReset={reset} state='stopped' />);
+    const stop = jest.fn();
+    const { getByTestId } = render(<Controls onToggle={toggle} onReset={stop} state='stopped' />);
 
-    fireEvent.click(getByText('Play'));
-
+    fireEvent.click(getByTestId('startButton'));
     expect(toggle).toBeCalled();
-    expect(reset).not.toBeCalled();
+    expect(stop).not.toBeCalled();
   });
 
   it('should toggle reset callback', () => {
     const toggle = jest.fn();
-    const stop = jest.fn(() => console.log('click on Stop button'));
-    const { getByText } = render(<Controls onToggle={toggle} onStop={stop} state='running' />);
+    const stop = jest.fn();
+    const { getByTestId } = render(<Controls onToggle={toggle} onStop={stop} state='running' />);
 
-    fireEvent.click(getByText('Stop'));
+    fireEvent.click(getByTestId('stopButton'));
 
     expect(stop).toBeCalled();
     expect(toggle).not.toBeCalled();

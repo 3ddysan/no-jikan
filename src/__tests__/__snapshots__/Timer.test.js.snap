@@ -14,6 +14,7 @@ exports[`Controls renders paused state correctly 1`] = `
   >
     <button
       className="button is-medium is-warning"
+      data-testid="startButton"
     >
       Play
     </button>
@@ -28,6 +29,7 @@ exports[`Controls renders paused state correctly 1`] = `
   >
     <button
       className="button is-danger is-medium"
+      data-testid="stopButton"
       disabled={false}
     >
       Stop
@@ -50,6 +52,7 @@ exports[`Controls renders running state correctly 1`] = `
   >
     <button
       className="button is-medium is-active"
+      data-testid="startButton"
     >
       Pause
     </button>
@@ -64,6 +67,7 @@ exports[`Controls renders running state correctly 1`] = `
   >
     <button
       className="button is-danger is-medium"
+      data-testid="stopButton"
       disabled={false}
     >
       Stop
@@ -86,6 +90,7 @@ exports[`Controls renders stopped state correctly 1`] = `
   >
     <button
       className="button is-medium is-primary"
+      data-testid="startButton"
     >
       Play
     </button>
@@ -100,6 +105,7 @@ exports[`Controls renders stopped state correctly 1`] = `
   >
     <button
       className="button is-danger is-medium"
+      data-testid="stopButton"
       disabled={true}
     >
       Stop
@@ -111,6 +117,7 @@ exports[`Controls renders stopped state correctly 1`] = `
 exports[`Display renders state correctly 1`] = `
 <div
   className="sc-bdVaJa gZRiZe"
+  data-testid="display"
 >
   <div
     className="sc-bwzfXH gCXOUF"
