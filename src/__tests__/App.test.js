@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from 'App';
 import { render, fireEvent, act, cleanup } from 'react-testing-library';
 
@@ -11,11 +10,9 @@ describe('App', () => {
 
   it('timer after 10 seconds', () => {
     const { getByTestId } = render(<App />)
-
-    const startButton = getByTestId("startButton");
+    fireEvent.click(getByTestId("startButton"));
 
     act(() => {
-      fireEvent.click(startButton);
       jest.advanceTimersByTime(10000);
     });
 
