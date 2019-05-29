@@ -2,32 +2,17 @@ import React, { useState } from 'react'
 import HistoryTable from 'components/HistoryTable'
 import Timer from 'components/Timer'
 import Logo from 'components/Logo'
-import { transformSeconds } from 'helper'
+import { formatSeconds, formatDate } from 'helper'
 
-const getLocales = () => navigator.languages && navigator.languages[0]
-
-const formatSeconds = (s) => {
-    const { hours, minutes } = transformSeconds(s);
-    const h = hours > 0 ? hours + 'h' : '';
-    const m = minutes > 0 ? minutes + 'm' : '';
-    const readableFormat = h + m;
-    return readableFormat === '' ? '1m' : readableFormat;
-}
-
-const formatDate = (date) => {
-    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    return date.toLocaleDateString(getLocales(), options)
-}
+const dateBefore = (s) => new Date(new Date().getTime() - s * 1000)
 
 const createEntry = (history, s) => {
-    if (s <= 1) {
-        return history;
-    }
-    return [...history, {
-        work: formatSeconds(s),
-        break: '0m',
-        date: formatDate(new Date())
-    }];
+    return (s <= 1) ? history :
+        [...history, {
+            work: formatSeconds(s),
+            break: '0m',
+            date: formatDate(dateBefore(s)),
+        }];
 }
 
 const App = () => {
