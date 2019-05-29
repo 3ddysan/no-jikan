@@ -57,8 +57,8 @@ export function Controls({ onToggle, onStop, state }) {
     return (
         <div className="columns is-mobile is-centered">
             <div className="column is-1" style={{ width: 'auto' }}>
-                    {state === 'running' ? 'Pause' : 'Play'}
                 <button data-testid="startButton" onClick={onToggle} className={classes('button', 'is-medium', playPauseStyle[state])}>
+                    {state === 'running' ? 'Pause' : 'Start'}
                 </button>
             </div>
             <div className="column is-1" style={{ width: 'auto' }}>
