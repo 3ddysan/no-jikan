@@ -5,7 +5,7 @@ import { faCalendarDay, faClock, faCoffee } from '@fortawesome/free-solid-svg-ic
 
 library.add(faCalendarDay, faClock, faCoffee)
 
-function list(entries) {
+function list(entries, onDelete) {
     if (entries.length > 0) {
         return entries.map((entry, index) => (
             <tr key={index} className="on-mobile-higher">
@@ -13,9 +13,9 @@ function list(entries) {
                 <td>{entry.break}</td>
                 <td className="has-text-centered">{entry.date}</td>
                 <td className="is-hidden-mobile has-text-centered">
-                    <a className="button is-light" href="#/">
+                    <button className="button is-light" onClick={() => onDelete(index)}>
                         <span className="">Delete</span>
-                    </a>
+                    </button>
                 </td>
             </tr>
         ))
@@ -30,7 +30,7 @@ function list(entries) {
     }
 }
 
-const HistoryTable = ({ entries = [] }) => (
+const HistoryTable = ({ entries = [], onDelete }) => (
     <div className="container">
         <table className="table is-fullwidth">
             <thead>
@@ -53,7 +53,7 @@ const HistoryTable = ({ entries = [] }) => (
                 </tr>
             </thead>
             <tbody>
-                {list(entries)}
+                {list(entries, onDelete)}
             </tbody>
         </table>
     </div>

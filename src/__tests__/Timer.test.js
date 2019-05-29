@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controls, Display } from 'components/Timer';
+import Timer, { Controls, Display } from 'components/Timer';
 import renderer from 'react-test-renderer';
 import { render, fireEvent, cleanup } from 'react-testing-library';
 
@@ -62,6 +62,18 @@ describe('Controls', () => {
 
     expect(stop).toBeCalled();
     expect(toggle).not.toBeCalled();
+  });
+
+});
+
+describe('Timer', () => {
+  it('should execute "onFinish" callback on stop', () => {
+    const finish = jest.fn();
+    const { getByTestId } = render(<Timer active={true} elapsedSeconds={1000} onFinish={finish} />);
+
+    fireEvent.click(getByTestId('stopButton'))
+
+    expect(finish).toBeCalledWith(1000);
   });
 
 });

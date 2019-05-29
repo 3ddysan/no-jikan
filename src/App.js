@@ -14,18 +14,31 @@ const formatSeconds = (s) => {
     return readableFormat === '' ? '1m' : readableFormat;
 }
 
-const createEntry = (s) => {
-    const now = new Date();
+const formatDate = (date) => {
     const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' };
-    return {
+    return date.toLocaleDateString(getLocales(), options)
+}
+
+const createEntry = (history, s) => {
+    if (s <= 1) {
+        return history;
+    }
+    return [...history, {
         work: formatSeconds(s),
         break: '0m',
-        date: now.toLocaleDateString(getLocales(), options)
-    };
+        date: formatDate(new Date())
+    }];
 }
 
 const App = () => {
     const [history, setHistory] = useState([]);
+
+    const handleCreate = (s) => setHistory(history => createEntry(history, s));
+    const handleDelete = (index) => setHistory(history => {
+        history.splice(index, 1)
+        return [...history];
+    });
+
     return (
         <>
             <section className="section hero">
@@ -33,10 +46,10 @@ const App = () => {
                     <Logo />
                 </div>
                 <div className="hero-body has-text-centered">
-                    <Timer active elapsedSeconds={0} onFinish={(s) => { setHistory(history => history.concat(createEntry(s))) }} />
+                    <Timer active elapsedSeconds={0} onFinish={handleCreate} />
                 </div>
                 <div className="hero-footer">
-                    <HistoryTable entries={history} />
+                    <HistoryTable entries={history} onDelete={handleDelete} />
                 </div>
             </section>
         </>

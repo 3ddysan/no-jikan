@@ -70,15 +70,19 @@ export function Controls({ onToggle, onStop, state }) {
     );
 }
 
-const Timer = ({ active = false, elapsedSeconds = 0 }) => {
-    const { timer, toggle, stop, state } = useTimer(active, elapsedSeconds);
+const Timer = ({ active = false, elapsedSeconds = 0, onFinish }) => {
+    const { timer, toggle, stop, state, totalSeconds } = useTimer(active, elapsedSeconds);
+    const onStop = () => {
+        onFinish && onFinish(totalSeconds);
+        stop();
+    };
     return (
         <>
             <div className="container">
                 <Display {...timer} />
             </div>
             <div className="container">
-                <Controls onToggle={toggle} onStop={stop} state={state} />
+                <Controls onToggle={toggle} onStop={onStop} state={state} />
             </div>
         </>
     )

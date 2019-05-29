@@ -216,16 +216,16 @@ exports[`HistoryTable renders with single  1`] = `
         <td
           className="is-hidden-mobile has-text-centered"
         >
-          <a
+          <button
             className="button is-light"
-            href="#/"
+            onClick={[Function]}
           >
             <span
               className=""
             >
               Delete
             </span>
-          </a>
+          </button>
         </td>
       </tr>
     </tbody>
