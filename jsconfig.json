@@ -13,5 +13,12 @@
   "exclude": [
     "node_modules",
     "**/node_modules/*"
-  ]
+  ],
+  "typeAcquisition": {
+    "include": [
+      "jest",
+      "react",
+      "react-test-renderer"
+    ]
+  }
 }
