@@ -78,19 +78,29 @@ export function Controls({ onToggle, onStop, state }) {
     );
 }
 
-const Timer = ({ active = false, elapsedSeconds = 0, onFinish }) => {
-    const { timer, toggle, stop, state, totalSeconds } = useTimer(active, elapsedSeconds);
-    const onStop = () => {
-        onFinish && onFinish(totalSeconds);
-        stop();
+const Timer = ({ active = false, elapsedSeconds = 0, elapsedBreakSeconds = 0, onFinish }) => {
+    const { timer, toggle, state, stop, totalSeconds } = useTimer(active, elapsedSeconds);
+    const previousIsBreak = state === 'paused';
+    const breakTimer = useTimer(previousIsBreak, elapsedBreakSeconds);
+
+    const onToggle = () => {
+        previousIsBreak && breakTimer.toggle()
+        toggle((nextIsWork => !nextIsWork && breakTimer.toggle()));
     };
+
+    const onStop = () => {
+        onFinish && onFinish(totalSeconds, breakTimer.totalSeconds);
+        breakTimer.stop()
+        stop()
+    };
+
     return (
         <>
             <div className="container">
-                <Display {...timer} />
+                <Display {...(previousIsBreak ? breakTimer.timer : timer)} paused={previousIsBreak} />
             </div>
             <div className="container">
-                <Controls onToggle={toggle} onStop={onStop} state={state} />
+                <Controls onToggle={onToggle} onStop={onStop} state={state} />
             </div>
         </>
     )

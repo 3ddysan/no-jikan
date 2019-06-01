@@ -73,7 +73,7 @@ describe('Timer', () => {
 
     fireEvent.click(getByTestId('stopButton'))
 
-    expect(finish).toBeCalledWith(1000);
+    expect(finish).toBeCalledWith(1000, 0);
   });
 
 });

@@ -6,19 +6,19 @@ import { formatSeconds, formatDate } from 'helper'
 
 const dateBefore = (s) => new Date(new Date().getTime() - s * 1000)
 
-const createEntry = (history, s) => {
-    return (s <= 1) ? history :
+const createEntry = (history, w, b) => {
+    return (w <= 1) ? history :
         [...history, {
-            work: formatSeconds(s),
-            break: '0m',
-            date: formatDate(dateBefore(s)),
+            work: formatSeconds(w),
+            break: formatSeconds(b),
+            date: formatDate(dateBefore(w)),
         }];
 }
 
 const App = () => {
     const [history, setHistory] = useState([]);
 
-    const handleCreate = (s) => setHistory(history => createEntry(history, s));
+    const handleCreate = (workSeconds, breakSeconds) => setHistory(history => createEntry(history, workSeconds, breakSeconds));
     const handleDelete = (index) => setHistory(history => {
         history.splice(index, 1)
         return [...history];
