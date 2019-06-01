@@ -1,6 +1,6 @@
 import React from 'react';
 import App from 'App';
-import { render, fireEvent, act, cleanup } from 'react-testing-library';
+import { render, fireEvent, act, cleanup } from '@testing-library/react';
 
 jest.useFakeTimers();
 

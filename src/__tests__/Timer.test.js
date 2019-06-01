@@ -1,7 +1,7 @@
 import React from 'react';
 import Timer, { Controls, Display } from 'components/Timer';
 import renderer from 'react-test-renderer';
-import { render, fireEvent, cleanup } from 'react-testing-library';
+import { render, fireEvent, cleanup } from '@testing-library/react';
 
 describe('Display', () => {
 
