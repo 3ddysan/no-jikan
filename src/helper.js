@@ -10,11 +10,11 @@ export const transformSeconds = (s) => {
 }
 
 export const formatSeconds = (s) => {
-    const { hours, minutes } = transformSeconds(s);
+    const { hours, minutes, seconds } = transformSeconds(s);
     const h = hours > 0 ? hours + 'h' : '';
     const m = minutes > 0 ? minutes + 'm' : '';
-    const readableFormat = h + m;
-    return readableFormat === '' ? '1m' : readableFormat;
+    const sec = seconds > 0 ? seconds + 's' : '';
+    return h + m + sec;
 }
 
 export const formatDate = (date) => {
