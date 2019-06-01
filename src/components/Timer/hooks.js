@@ -1,17 +1,16 @@
 import { useEffect, useState, useRef } from 'react'
 import { transformSeconds } from 'helper'
 
-export const useTimer = (active = false, elapsedSeconds = 0) => {
-    const [seconds, setSeconds] = useState(elapsedSeconds)
+export const useInterval = (callback, active = false) => {
     const [isActive, setActive] = useState(active)
     const intervalRef = useRef()
-    const state = isActive ? 'running' : seconds > 0 ? 'paused' : 'stopped'
+    const state = isActive ? 'running' : 'stopped'
 
     useEffect(() => {
         if (isActive) {
             intervalRef.current = setInterval(() => {
                 if (state === 'running') {
-                    setSeconds(previous => previous + 1)
+                    callback()
                 }
             }, 1000);
             return () => {
@@ -22,11 +21,26 @@ export const useTimer = (active = false, elapsedSeconds = 0) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isActive])
 
-    const toggle = () => {
-        setActive(isActive => !isActive)
+    return { isActive, setActive, state }
+}
+
+export const useTimer = (active = false, elapsedSeconds = 0) => {
+    const [seconds, setSeconds] = useState(elapsedSeconds)
+    const { isActive, setActive, state } = useInterval(() => {
+        setSeconds(previous => previous + 1)
+    }, active);
+    const enhancedState = (!isActive && seconds > 0 ? 'paused' : state);
+
+    const toggle = (fn) => {
+        setActive(isActive =>  {
+            const newState = !isActive;
+            fn && fn(newState)
+            return newState
+        })
     }
 
-    const stop = () => {
+    const stop = (fn) => {
+        fn && fn(seconds)
         setActive(false)
         setSeconds(0)
     }
@@ -35,7 +49,7 @@ export const useTimer = (active = false, elapsedSeconds = 0) => {
         timer: transformSeconds(seconds),
         toggle,
         stop,
-        state,
+        state: enhancedState,
         totalSeconds: seconds
     };
 }
