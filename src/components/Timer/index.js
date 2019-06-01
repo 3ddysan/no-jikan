@@ -10,15 +10,23 @@ const TimerDisplay = styled.div`
 
 const TimeUnit = styled.div`
     padding: 10px;
-    background: #F9F9F9;
     display: inline-block;
+    ${({ paused }) => paused ? `
+        background: #fff3c2;
+    ` : `
+        background: #F9F9F9;
+    `}
 
     .unit {
         padding: 15px;
         border-radius: 3px;
-        background: #F0F0F0;
         display: inline-block;
         width: 60px;
+        ${({ paused }) => paused ? `
+            background: #ffe26c;
+        ` : `
+            background: #F0F0F0;
+        `}
     }
 
     .unit-label {
@@ -26,32 +34,32 @@ const TimeUnit = styled.div`
     }
 `
 
-const playPauseStyle = {
-    stopped: 'is-primary',
-    paused: 'is-warning',
-    running: 'is-active',
-};
-
 const pad = (v) => v.toString().padStart(2, 0)
 
-export function Display({ hours, minutes, seconds }) {
+export function Display({ hours, minutes, seconds, paused }) {
     return (
-        <TimerDisplay data-testid="display">
-            <TimeUnit>
+        <TimerDisplay paused={paused} data-testid="display">
+            <TimeUnit paused={paused}>
                 <div className="unit is-size-5">{pad(hours)}</div>
                 <div className="unit-label is-size-7 has-text-centered">Hours</div>
             </TimeUnit>
-            <TimeUnit>
+            <TimeUnit paused={paused}>
                 <div className="unit is-size-5">{pad(minutes)}</div>
                 <div className="unit-label is-size-7 has-text-centered">Minutes</div>
             </TimeUnit>
-            <TimeUnit>
+            <TimeUnit paused={paused}>
                 <div className="unit is-size-5">{pad(seconds)}</div>
                 <div className="unit-label is-size-7 has-text-centered">Seconds</div>
             </TimeUnit>
         </TimerDisplay>
     );
 }
+
+const playPauseStyle = {
+    stopped: 'is-primary',
+    paused: 'is-warning',
+    running: 'is-active',
+};
 
 export function Controls({ onToggle, onStop, state }) {
     return (

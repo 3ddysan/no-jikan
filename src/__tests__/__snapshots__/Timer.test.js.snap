@@ -120,7 +120,7 @@ exports[`Display renders state correctly 1`] = `
   data-testid="display"
 >
   <div
-    className="sc-bwzfXH gCXOUF"
+    className="sc-bwzfXH hmpsHy"
   >
     <div
       className="unit is-size-5"
@@ -134,7 +134,7 @@ exports[`Display renders state correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-bwzfXH gCXOUF"
+    className="sc-bwzfXH hmpsHy"
   >
     <div
       className="unit is-size-5"
@@ -148,7 +148,7 @@ exports[`Display renders state correctly 1`] = `
     </div>
   </div>
   <div
-    className="sc-bwzfXH gCXOUF"
+    className="sc-bwzfXH hmpsHy"
   >
     <div
       className="unit is-size-5"
