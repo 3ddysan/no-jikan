@@ -16,7 +16,7 @@ exports[`Controls renders paused state correctly 1`] = `
       className="button is-medium is-warning"
       data-testid="startButton"
     >
-      Start
+      Continue
     </button>
   </div>
   <div
