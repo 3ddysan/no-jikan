@@ -1,23 +1,19 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import { transformSeconds } from 'helper'
 
 export const useInterval = (callback, active = false) => {
     const [isActive, setActive] = useState(active)
-    const intervalRef = useRef()
     const state = isActive ? 'running' : 'stopped'
 
     useEffect(() => {
         if (isActive) {
-            intervalRef.current = setInterval(() => {
+            const id = setInterval(() => {
                 if (state === 'running') {
                     callback()
                 }
             }, 1000);
-            return () => {
-                clearInterval(intervalRef.current)
-            }
+            return () => clearInterval(id)
         }
-        clearInterval(intervalRef.current)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isActive])
 
