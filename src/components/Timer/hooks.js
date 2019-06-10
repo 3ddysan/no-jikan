@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 
-export function useEnhancedTimer(initialValue = 0, active = false, ms = 1000) {
-    const initialState = active ? 'running' : 'stopped'
+export function useTimer(initialValue = 0, initialState = 'stopped', ms = 1000) {
     const [count, setCount] = useState(initialValue);
     const [state, setState] = useState(initialState);
     const intervalRef = useRef(null);
@@ -56,10 +55,12 @@ export function useEnhancedTimer(initialValue = 0, active = false, ms = 1000) {
     return { count, toggle, start, pause, stop, state };
 }
 
-export function useCombinedTimer(active, onReset, elapsedSeconds = 0, elapsedBreakSeconds = 0) {
-    const { count: workCount, toggle: toggleWork, stop: stopWork, state: workState } = useEnhancedTimer(elapsedSeconds, active)
-    const { count: breakCount, toggle: toggleBreak, stop: stopBreak } = useEnhancedTimer(elapsedBreakSeconds)
-    const isInit = useRef(!active);
+export function useCombinedTimer(activeMode, onReset, elapsedSeconds = 0, elapsedBreakSeconds = 0) {
+    const isWorkMode = activeMode === 'work';
+    const isBreakMode = activeMode === 'break';
+    const { count: workCount, toggle: toggleWork, stop: stopWork, state: workState } = useTimer(elapsedSeconds, isWorkMode ? 'running' : isBreakMode ? 'paused' : 'stopped');
+    const { count: breakCount, toggle: toggleBreak, stop: stopBreak } = useTimer(elapsedBreakSeconds, isBreakMode ? 'running' : 'stopped');
+    const isInit = useRef(activeMode === null);
     const isWorking = workState === 'running';
     const isPaused = workState === 'paused';
     const counter = isWorking ? workCount : isPaused ? breakCount : 0

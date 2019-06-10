@@ -67,9 +67,9 @@ describe('Controls', () => {
 });
 
 describe('Timer', () => {
-  it('should execute "onFinish" callback on stop', () => {
+  it('should execute "onFinish" callback on stop', async () => {
     const finish = jest.fn();
-    const { getByTestId } = render(<Timer active={true} elapsedSeconds={1000} onReset={finish} />);
+    const { getByTestId } = render(<Timer activeMode="work" elapsedSeconds={1000} onReset={finish} />);
 
     fireEvent.click(getByTestId('stopButton'))
 

@@ -79,8 +79,8 @@ export const Controls = memo(({ onToggle, onStop, state }) => {
     );
 })
 
-const Timer = ({ active = true, elapsedSeconds = 0, elapsedBreakSeconds = 0, onReset }) => {
-    const { counter, toggle, stop, workState, isPaused } = useCombinedTimer(active, onReset, elapsedSeconds, elapsedBreakSeconds)
+const Timer = ({ activeMode = null, elapsedSeconds = 0, elapsedBreakSeconds = 0, onReset }) => {
+    const { counter, toggle, stop, workState, isPaused } = useCombinedTimer(activeMode, onReset, elapsedSeconds, elapsedBreakSeconds)
 
     return (
         <>
