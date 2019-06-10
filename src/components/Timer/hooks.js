@@ -6,7 +6,6 @@ export function useTimer(initialValue = 0, initialState = 'stopped', ms = 1000) 
     const intervalRef = useRef(null);
 
     const start = useCallback(() => {
-        console.log('start')
         if (intervalRef.current !== null) {
             return;
         }
@@ -17,7 +16,6 @@ export function useTimer(initialValue = 0, initialState = 'stopped', ms = 1000) 
     }, [ms]);
 
     const pause = useCallback(() => {
-        console.log('pause');
         if (intervalRef.current === null) {
             return;
         }
@@ -27,7 +25,6 @@ export function useTimer(initialValue = 0, initialState = 'stopped', ms = 1000) 
     }, []);
 
     const stop = useCallback((onStop) => {
-        console.log('stop');
         clearInterval(intervalRef.current);
         intervalRef.current = null;
         setCount((currentCount) => {
@@ -38,7 +35,6 @@ export function useTimer(initialValue = 0, initialState = 'stopped', ms = 1000) 
     }, []);
 
     const toggle = useCallback(() => {
-        console.log('toggle', state)
         if (state === 'running') {
             pause();
         } else {
@@ -66,7 +62,6 @@ export function useCombinedTimer(activeMode, onReset, elapsedSeconds = 0, elapse
     const counter = isWorking ? workCount : isPaused ? breakCount : 0
 
     const toggle = useCallback(() => {
-        console.log('onToggle');
         if (isInit.current) {
             isInit.current = false
             toggleWork();
@@ -77,7 +72,6 @@ export function useCombinedTimer(activeMode, onReset, elapsedSeconds = 0, elapse
     }, [toggleWork, toggleBreak]);
 
     const stop = useCallback(() => {
-        console.log('onStop');
         stopWork((workSecond) => {
             stopBreak((breakSeconds) => {
                 onReset(workSecond, breakSeconds)

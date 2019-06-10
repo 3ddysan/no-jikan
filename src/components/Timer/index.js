@@ -62,7 +62,6 @@ const playPauseStyle = {
 };
 
 export const Controls = memo(({ onToggle, onStop, state }) => {
-    console.log('render controls');
     return (
         <div className="columns is-mobile is-centered">
             <div className="column is-1" style={{ width: 'auto' }}>
