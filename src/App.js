@@ -31,7 +31,7 @@ const App = () => {
                     <Logo />
                 </div>
                 <div className="hero-body has-text-centered">
-                    <Timer elapsedSeconds={0} onFinish={handleCreate} />
+                    <Timer elapsedSeconds={0} onReset={handleCreate} />
                 </div>
                 <div className="hero-footer">
                     <HistoryTable entries={history} onDelete={handleDelete} />

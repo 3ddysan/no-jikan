@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
-import { classes } from 'helper'
-import { useTimer } from 'components/Timer/hooks'
+import { classes, transformSeconds } from 'helper'
+import { useCombinedTimer } from 'components/Timer/hooks'
 
 const TimerDisplay = styled.div`
     padding-top: 15px;
@@ -61,7 +61,8 @@ const playPauseStyle = {
     running: 'is-active',
 };
 
-export function Controls({ onToggle, onStop, state }) {
+export const Controls = memo(({ onToggle, onStop, state }) => {
+    console.log('render controls');
     return (
         <div className="columns is-mobile is-centered">
             <div className="column is-1" style={{ width: 'auto' }}>
@@ -76,31 +77,18 @@ export function Controls({ onToggle, onStop, state }) {
             </div>
         </div>
     );
-}
+})
 
-const Timer = ({ active = false, elapsedSeconds = 0, elapsedBreakSeconds = 0, onFinish }) => {
-    const { timer, toggle, state, stop, totalSeconds } = useTimer(active, elapsedSeconds);
-    const previousIsBreak = state === 'paused';
-    const breakTimer = useTimer(previousIsBreak, elapsedBreakSeconds);
-
-    const onToggle = () => {
-        previousIsBreak && breakTimer.toggle()
-        toggle((nextIsWork => !nextIsWork && breakTimer.toggle()));
-    };
-
-    const onStop = () => {
-        onFinish && onFinish(totalSeconds, breakTimer.totalSeconds);
-        breakTimer.stop()
-        stop()
-    };
+const Timer = ({ active = true, elapsedSeconds = 0, elapsedBreakSeconds = 0, onReset }) => {
+    const { counter, toggle, stop, workState, isPaused } = useCombinedTimer(active, onReset, elapsedSeconds, elapsedBreakSeconds)
 
     return (
         <>
             <div className="container">
-                <Display {...(previousIsBreak ? breakTimer.timer : timer)} paused={previousIsBreak} />
+                <Display {...(transformSeconds(counter))} paused={isPaused} />
             </div>
             <div className="container">
-                <Controls onToggle={onToggle} onStop={onStop} state={state} />
+                <Controls onToggle={toggle} onStop={stop} state={workState} />
             </div>
         </>
     )

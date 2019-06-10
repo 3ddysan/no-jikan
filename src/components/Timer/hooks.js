@@ -1,56 +1,88 @@
-import { useEffect, useState, useRef } from 'react'
-import { transformSeconds } from 'helper'
+import { useEffect, useState, useRef, useCallback } from 'react'
 
-export const useInterval = (callback, active = false) => {
-    const [isActive, setActive] = useState(active)
-    const state = isActive ? 'running' : 'stopped'
-    const callbackRef = useRef();
+export function useEnhancedTimer(initialValue = 0, active = false, ms = 1000) {
+    const initialState = active ? 'running' : 'stopped'
+    const [count, setCount] = useState(initialValue);
+    const [state, setState] = useState(initialState);
+    const intervalRef = useRef(null);
 
-    useEffect(() => {
-        callbackRef.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-        if (isActive) {
-            const id = setInterval(() => {
-                if (state === 'running') {
-                    callbackRef.current()
-                }
-            }, 1000);
-            return () => clearInterval(id)
+    const start = useCallback(() => {
+        console.log('start')
+        if (intervalRef.current !== null) {
+            return;
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isActive])
+        intervalRef.current = setInterval(() => {
+            setCount(c => c + 1);
+        }, ms);
+        setState('running');
+    }, [ms]);
 
-    return { isActive, setActive, state }
+    const pause = useCallback(() => {
+        console.log('pause');
+        if (intervalRef.current === null) {
+            return;
+        }
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        setState('paused');
+    }, []);
+
+    const stop = useCallback((onStop) => {
+        console.log('stop');
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+        setCount((currentCount) => {
+            onStop && onStop(currentCount)
+            return 0
+        });
+        setState('stopped');
+    }, []);
+
+    const toggle = useCallback(() => {
+        console.log('toggle', state)
+        if (state === 'running') {
+            pause();
+        } else {
+            start();
+        }
+    }, [pause, start, state]);
+
+    useEffect(() => {
+        if (initialState === 'running') {
+            start();
+        }
+    }, [initialState, start]);
+
+    return { count, toggle, start, pause, stop, state };
 }
 
-export const useTimer = (active = false, elapsedSeconds = 0) => {
-    const [seconds, setSeconds] = useState(elapsedSeconds)
-    const { isActive, setActive, state } = useInterval(() => {
-        setSeconds(previous => previous + 1)
-    }, active);
-    const enhancedState = (!isActive && seconds > 0 ? 'paused' : state);
+export function useCombinedTimer(active, onReset, elapsedSeconds = 0, elapsedBreakSeconds = 0) {
+    const { count: workCount, toggle: toggleWork, stop: stopWork, state: workState } = useEnhancedTimer(elapsedSeconds, active)
+    const { count: breakCount, toggle: toggleBreak, stop: stopBreak } = useEnhancedTimer(elapsedBreakSeconds)
+    const isInit = useRef(!active);
+    const isWorking = workState === 'running';
+    const isPaused = workState === 'paused';
+    const counter = isWorking ? workCount : isPaused ? breakCount : 0
 
-    const toggle = (fn) => {
-        setActive(isActive => {
-            const newState = !isActive;
-            fn && fn(newState)
-            return newState
-        })
-    }
+    const toggle = useCallback(() => {
+        console.log('onToggle');
+        if (isInit.current) {
+            isInit.current = false
+            toggleWork();
+        } else {
+            toggleWork();
+            toggleBreak();
+        }
+    }, [toggleWork, toggleBreak]);
 
-    const stop = (fn) => {
-        fn && fn(seconds)
-        setActive(false)
-        setSeconds(0)
-    }
+    const stop = useCallback(() => {
+        console.log('onStop');
+        stopWork((workSecond) => {
+            stopBreak((breakSeconds) => {
+                onReset(workSecond, breakSeconds)
+            });
+        });
+    }, [stopWork, stopBreak, onReset]);
 
-    return {
-        timer: transformSeconds(seconds),
-        toggle,
-        stop,
-        state: enhancedState,
-        totalSeconds: seconds
-    };
+    return { counter, toggle, stop, workState, isWorking, isPaused };
 }
