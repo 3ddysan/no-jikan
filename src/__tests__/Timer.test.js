@@ -72,6 +72,7 @@ describe('Timer', () => {
     const { getByTestId } = render(<Timer activeMode="work" elapsedSeconds={1000} onReset={finish} />);
 
     fireEvent.click(getByTestId('stopButton'))
+    await flushPromises();
 
     expect(finish).toBeCalledWith(1000, 0);
   });

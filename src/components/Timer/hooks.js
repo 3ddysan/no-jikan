@@ -24,15 +24,15 @@ export function useTimer(initialValue = 0, initialState = 'stopped', ms = 1000) 
         setState('paused');
     }, []);
 
-    const stop = useCallback((onStop) => {
+    const stop = useCallback(() => new Promise((resolve) => {
         clearInterval(intervalRef.current);
         intervalRef.current = null;
         setCount((currentCount) => {
-            onStop && onStop(currentCount)
+            resolve(currentCount)
             return 0
         });
         setState('stopped');
-    }, []);
+    }), []);
 
     const toggle = useCallback(() => {
         if (state === 'running') {
@@ -71,12 +71,10 @@ export function useCombinedTimer(activeMode, onReset, elapsedSeconds = 0, elapse
         }
     }, [toggleWork, toggleBreak]);
 
-    const stop = useCallback(() => {
-        stopWork((workSecond) => {
-            stopBreak((breakSeconds) => {
-                onReset(workSecond, breakSeconds)
-            });
-        });
+    const stop = useCallback(async () => {
+        const workSecond = await stopWork();
+        const breakSeconds = await stopBreak();
+        onReset(workSecond, breakSeconds)
     }, [stopWork, stopBreak, onReset]);
 
     return { counter, toggle, stop, workState, isWorking, isPaused };
