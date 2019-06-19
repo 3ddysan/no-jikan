@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled from 'styled-components'
 
 const Title = styled.h1`
@@ -20,10 +20,10 @@ const Title = styled.h1`
     }
 `
 
-const Logo = () => (
+const Logo = memo(() => (
     <div className="container">
         <Title className="title">no<span>-</span>jikan</Title>
     </div>
-);
+));
 
 export default Logo;

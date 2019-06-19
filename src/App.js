@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import HistoryTable from 'components/HistoryTable'
 import Timer from 'components/Timer'
 import Logo from 'components/Logo'
@@ -18,11 +18,11 @@ const createEntry = (history, w, b) => {
 const App = () => {
     const [history, setHistory] = useState([]);
 
-    const handleCreate = (workSeconds, breakSeconds) => setHistory(history => createEntry(history, workSeconds, breakSeconds));
-    const handleDelete = (index) => setHistory(history => {
+    const handleCreate = useCallback((workSeconds, breakSeconds) => setHistory(history => createEntry(history, workSeconds, breakSeconds)), [setHistory]);
+    const handleDelete = useCallback((index) => setHistory(history => {
         history.splice(index, 1)
         return [...history];
-    });
+    }), [setHistory]);
 
     return (
         <>
