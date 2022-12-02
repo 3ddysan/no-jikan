@@ -1,18 +1,4 @@
 {
-    "cSpell.words": [
-        "bulma",
-        "fullwidth",
-        "immer",
-        "jikan",
-        "lightcoral"
-    ],
-    "files.exclude": {
-        "node_modules": true,
-        "coverage": true,
-        ".nyc_output": true
-    },
-    "files.associations": {
-        "*.js": "javascriptreact"
-    },
-    "editor.formatOnSave": true
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "explorer.excludeGitIgnore": true
 }
