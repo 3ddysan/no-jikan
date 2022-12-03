@@ -6,6 +6,7 @@
 <style scoped>
 .logo {
   margin: 1em;
+  line-height: 35px;
 }
 .title {
   width: 70px;

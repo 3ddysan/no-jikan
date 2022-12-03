@@ -8,5 +8,6 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Logo: typeof import('./components/Logo.vue')['default']
+    'Logo.story': typeof import('./components/Logo.story.vue')['default']
   }
 }
